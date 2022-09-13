@@ -1,0 +1,9 @@
+html,
+body {
+  background-color: #000000;
+}
+
+main {
+  width: 375px;
+  height: 667px;
+}
