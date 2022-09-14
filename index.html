@@ -9,8 +9,14 @@
   </head>
   <body>
     <main>
-      <div class="circular start">
-        <button class="circular start" onclick="startTimer()">Start</button>
+      <div id="stopwatch-control" class="circular start">
+        <button
+          id="stopwatch-control-btn"
+          class="circular"
+          onclick="toggleTimer()"
+        >
+          Start
+        </button>
       </div>
     </main>
     <script src="main.js"></script>

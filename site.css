@@ -17,6 +17,7 @@ button,
 button:hover {
   background-color: transparent;
   border: black 2px solid;
+  color: inherit;
 }
 
 /* Button classes */
