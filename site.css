@@ -3,6 +3,8 @@
   padding: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: white;
+  font-size: 16px;
 }
 body {
   background-color: black;
@@ -11,6 +13,8 @@ body {
 main {
   width: 375px;
   height: 667px;
+  margin: 0 auto;
+  padding: 20px 34px;
 }
 
 button,
@@ -20,13 +24,26 @@ button:hover {
   color: inherit;
 }
 
-/* Button classes */
-.circular {
-  border-radius: 50%;
-  height: 5.5em;
-  width: 5.5em;
+/* Utility styles */
+.column-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
+/* Control bar styles */
+.controls-display {
+  display: flex;
+  gap: 4em;
+}
+
+/* Control button styles */
+.circular {
+  border-radius: 50%;
+  height: 4.5em;
+  width: 4.5em;
+}
 div.circular {
   height: 5em;
   width: 5em;
@@ -35,12 +52,20 @@ div.circular {
   align-items: center;
 }
 
+/* Regular button styles */
+.default {
+  background-color: #636366;
+}
+.default:hover {
+  background-color: #636366a7;
+  color: #ffffffd5;
+}
+
 /* Start button styles */
 .start {
   background-color: #30d15842;
   color: #30d158;
 }
-
 .start:hover {
   background-color: #30d15829;
   color: #30d158d5;
@@ -51,8 +76,18 @@ div.circular {
   background-color: #ff443a42;
   color: #ff453a;
 }
-
 .stop:hover {
   background-color: #ff443a29;
   color: #ff453ad5;
+}
+
+/* Timer display styles */
+.timer-display > span {
+  font-size: 64px;
+  font-weight: 200;
+}
+
+/* Lap display styles */
+.lap-display {
+  height: 200px;
 }

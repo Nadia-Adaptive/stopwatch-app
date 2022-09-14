@@ -8,16 +8,26 @@
     <title>IPhone Stopwatch</title>
   </head>
   <body>
-    <main>
-      <div id="stopwatch-control" class="circular start">
-        <button
-          id="stopwatch-control-btn"
-          class="circular"
-          onclick="toggleTimer()"
-        >
-          Start
-        </button>
-      </div>
+    <main class="column-container">
+      <section class="timer-display"><span>00:00.00</span></section>
+      <section class="controls-display">
+        <div class="circular default">
+          <button class="circular" onclick="toggleTimer()">Lap</button>
+        </div>
+        <div class="circular default">
+          <img src="play_icon.svg" />
+        </div>
+        <div id="stopwatch-control" class="circular start">
+          <button
+            id="stopwatch-control-btn"
+            class="circular"
+            onclick="toggleTimer()"
+          >
+            Start
+          </button>
+        </div>
+      </section>
+      <section class="lap-display column-container"></section>
     </main>
     <script src="main.js"></script>
   </body>
