@@ -88,6 +88,18 @@ div.circular {
 }
 
 /* Lap display styles */
-.lap-display {
+#lap-display {
+  width: 100%;
   height: 200px;
+  overflow-y: scroll;
+  justify-content: flex-end;
+}
+
+.lap {
+  height: 50px;
+  padding: 15px;
+  width: inherit;
+  display: flex;
+  justify-content: space-between;
+  border: #636366 1px solid;
 }
