@@ -85,6 +85,7 @@ div.circular {
 .timer-display > span {
   font-size: 64px;
   font-weight: 200;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Lap display styles */
