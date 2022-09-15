@@ -1,3 +1,5 @@
+const completedLaps = ["00:00.00"];
+
 function toggleTimer() {
   const timerControl = document.querySelector("#stopwatch-control");
   const controlBtn = document.querySelector("#stopwatch-control-btn");
@@ -17,11 +19,22 @@ function toggleTimer() {
 
 function newLap() {
   const lapDisplay = document.querySelector("#lap-display");
+  const lapDivs = document.querySelectorAll(".lap");
+  const lapMarkup = `<span>Lap ${
+    completedLaps.length
+  }</span><span>${completedLaps.at(-1)}</span>`;
 
-  const lap = document.createElement("div");
-  console.log(lap);
-  lap.innerHTML = "<span>Lap 0</span><span>00:00.00</span>";
-  lap.classList.add("lap");
+  for (const lap of lapDivs) {
+    if (!lap.innerHTML) {
+      lap.innerHTML = lapMarkup;
+      isDisplayFull = false;
+      break;
+    }
+  }
 
-  lapDisplay.appendChild(lap);
+  if (completedLaps.length === lapDivs.length) {
+    const lap = document.createElement("div");
+    lap.classList.add("lap");
+    lapDisplay.appendChild(lap);
+  }
 }

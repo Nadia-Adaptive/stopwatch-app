@@ -96,7 +96,7 @@ div.circular {
 }
 
 .lap {
-  height: 20px;
+  height: 50px;
   padding: 15px;
   width: inherit;
   display: flex;
