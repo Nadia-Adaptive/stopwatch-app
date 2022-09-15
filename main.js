@@ -1,6 +1,6 @@
 const completedLaps = ["00:00.00"];
 let timerID = null;
-let startTime, lapTime, currentTime;
+let startTime, lapTime, stopTime, timeLapsed, currentTime;
 
 function toggleTimer() {
   const timerControl = document.querySelector("#stopwatch-control");
@@ -21,6 +21,7 @@ function toggleTimer() {
     controlBtn.innerText = "Start";
 
     clearInterval(timerID);
+    stopTime = timeLapsed;
   }
 }
 
@@ -28,9 +29,11 @@ function startStopwatch() {
   const timerText = document.querySelector(".timer-display>span");
   currentTime = new Date();
 
-  const timeLapsedInSeconds = currentTime.getTime() - startTime.getTime();
-
-  const timeLapsed = new Date(timeLapsedInSeconds);
+  let timeLapsedInSeconds = currentTime.getTime() - startTime.getTime();
+  if (stopTime) {
+    timeLapsedInSeconds += stopTime.getTime();
+  }
+  timeLapsed = new Date(timeLapsedInSeconds);
 
   let millisecs = timeLapsed.getMilliseconds();
   if (!millisecs || millisecs < 10) {
