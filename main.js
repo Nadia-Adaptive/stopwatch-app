@@ -62,7 +62,7 @@ function newLap() {
     }
   }
 
-  if (completedLaps.length === lapDivs.length) {
+  if (completedLaps === lapDivs.length) {
     const lap = document.createElement("div");
     lap.classList.add("lap");
     lapDisplay.appendChild(lap);
