@@ -27,9 +27,8 @@ function toggleTimer() {
 
 function startStopwatch() {
   const timerText = document.querySelector(".timer-display>span");
-  const currentTime = new Date();
 
-  let timeLapsedInSeconds = currentTime.getTime() - startTime.getTime();
+  let timeLapsedInSeconds = Date.now() - startTime.getTime();
 
   if (stopTime) {
     timeLapsedInSeconds += stopTime.getTime();
@@ -44,13 +43,12 @@ function newLap() {
   const lapDisplay = document.querySelector("#lap-display");
   const lapDivs = document.querySelectorAll(".lap");
 
-  const currentTime = new Date();
-
   if (!prevLapTime) {
-    prevLapTime = startTime;
+    prevLapTime = startTime.getTime();
   }
 
-  const lapTime = new Date(currentTime.getTime() - prevLapTime.getTime());
+  const currentTime = Date.now();
+  const lapTime = new Date(currentTime - prevLapTime);
   const lapMarkup = `<span>Lap ${++completedLaps}</span><span>${formatTime(
     lapTime
   )}</span>`;
