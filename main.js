@@ -37,35 +37,7 @@ function startStopwatch() {
 
   timeLapsed = new Date(timeLapsedInSeconds);
 
-  let millisecs = timeLapsed.getMilliseconds();
-  if (!millisecs || millisecs < 10) {
-    millisecs = "00";
-  } else if (millisecs < 99) {
-    millisecs = "0" + String(millisecs).slice(0, 1);
-  } else if (millisecs % 100 === 0) {
-    millisecs = String(millisecs).slice(0, 1) + "0";
-  } else {
-    millisecs = String(millisecs).slice(0, 2);
-  }
-
-  timerText.innerText = `${timeLapsed.toLocaleTimeString("en", {
-    second: "2-digit",
-    minute: "2-digit",
-  })}.${millisecs}`;
-}
-
-function formatMilliseconds(millisecs) {
-  let formattedMillisecs = null;
-  if (!millisecs || millisecs < 10) {
-    formattedMillisecs = "00";
-  } else if (millisecs < 99) {
-    formattedMillisecs = "0" + String(millisecs).slice(0, 1);
-  } else if (millisecs % 100 === 0) {
-    formattedMillisecs = String(millisecs).slice(0, 1) + "0";
-  } else {
-    formattedMillisecs = String(millisecs).slice(0, 2);
-  }
-  return formattedMillisecs;
+  timerText.innerText = `${formatTime(timeLapsed)}`;
 }
 
 function newLap() {
@@ -79,13 +51,9 @@ function newLap() {
   }
 
   const lapTime = new Date(currentTime.getTime() - prevLapTime.getTime());
-  const lapMarkup = `<span>Lap ${++completedLaps}</span><span>${lapTime.toLocaleTimeString(
-    "en",
-    {
-      second: "2-digit",
-      minute: "2-digit",
-    }
-  )}.${formatMilliseconds(lapTime.getMilliseconds())}</span>`;
+  const lapMarkup = `<span>Lap ${++completedLaps}</span><span>${formatTime(
+    lapTime
+  )}</span>`;
 
   prevLapTime = currentTime;
 
@@ -101,4 +69,27 @@ function newLap() {
     lap.classList.add("lap");
     lapDisplay.appendChild(lap);
   }
+}
+
+function formatTime(time) {
+  let formattedTime = null;
+  let formattedMillisecs = null;
+  const millisecs = time.getMilliseconds();
+
+  if (!millisecs || millisecs < 10) {
+    formattedMillisecs = "00";
+  } else if (millisecs < 99) {
+    formattedMillisecs = "0" + String(millisecs).slice(0, 1);
+  } else if (millisecs % 100 === 0) {
+    formattedMillisecs = String(millisecs).slice(0, 1) + "0";
+  } else {
+    formattedMillisecs = String(millisecs).slice(0, 2);
+  }
+
+  formattedTime = `${time.toLocaleTimeString("en", {
+    second: "2-digit",
+    minute: "2-digit",
+  })}.${formattedMillisecs}`;
+
+  return formattedTime;
 }
