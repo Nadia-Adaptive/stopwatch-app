@@ -1,17 +1,28 @@
+const NUM_OF_PREPOPULATED_DIVS = 5;
 let completedLaps = 0;
-let hiddenLapDivs = 4;
+let hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
 let timerID = null;
 let startTime, prevLapTime, stopTime, timeLapsed;
+const lapButton = document.querySelector(".default > button");
+const timerControl = document.querySelector("#stopwatch-control");
+
+lapButton.onclick = () => {
+  if (!isStopwatchRunning()) {
+    restartTimer();
+  } else {
+    newLap();
+  }
+};
 
 function toggleTimer() {
-  const timerControl = document.querySelector("#stopwatch-control");
   const controlBtn = document.querySelector("#stopwatch-control-btn");
 
-  if (timerControl.classList.contains("start")) {
+  if (!isStopwatchRunning()) {
     timerControl.classList.remove("start");
     timerControl.classList.add("stop");
 
     controlBtn.innerText = "Stop";
+    lapButton.innerText = "Lap";
 
     startTime = new Date();
     timerID = setInterval(startStopwatch, 10);
@@ -20,9 +31,35 @@ function toggleTimer() {
     timerControl.classList.add("start");
 
     controlBtn.innerText = "Start";
+    lapButton.innerText = "Restart";
 
     clearInterval(timerID);
     stopTime = timeLapsed;
+  }
+}
+
+function isStopwatchRunning() {
+  return timerControl.classList.contains("stop");
+}
+
+function restartTimer() {
+  const timerDisplay = document.querySelector(".timer-display>span");
+  const lapDisplay = document.querySelector("#lap-display");
+  const lapDivs = document.querySelectorAll(".lap");
+
+  timerDisplay.innerText = "00:00.00";
+  lapButton.innerText = "Lap";
+  clearInterval(timerID);
+  stopTime = null;
+  hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
+  completedLaps = 0;
+
+  for (const lap of lapDivs) {
+    if (!lap.classList.contains("hidden")) {
+      lapDisplay.removeChild(lap);
+    } else {
+      lap.classList.remove("hidden");
+    }
   }
 }
 
