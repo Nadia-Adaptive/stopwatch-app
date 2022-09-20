@@ -1,3 +1,4 @@
+import { formatTime } from "./utils.js";
 const NUM_OF_PREPOPULATED_DIVS = 5;
 let completedLaps = 0;
 let hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
@@ -5,6 +6,7 @@ let timerID = null;
 let startTime, prevLapTime, stopTime, timeLapsed;
 const lapButton = document.querySelector(".default > button");
 const timerControl = document.querySelector("#stopwatch-control");
+const timerButton = document.querySelector("#stopwatch-control > button");
 
 lapButton.onclick = () => {
   if (!isStopwatchRunning()) {
@@ -14,14 +16,14 @@ lapButton.onclick = () => {
   }
 };
 
-function toggleTimer() {
-  const controlBtn = document.querySelector("#stopwatch-control-btn");
+timerButton.onclick = toggleTimer;
 
+function toggleTimer() {
   if (!isStopwatchRunning()) {
     timerControl.classList.remove("start");
     timerControl.classList.add("stop");
 
-    controlBtn.innerText = "Stop";
+    timerButton.innerText = "Stop";
     lapButton.innerText = "Lap";
 
     startTime = new Date();
@@ -30,7 +32,7 @@ function toggleTimer() {
     timerControl.classList.remove("stop");
     timerControl.classList.add("start");
 
-    controlBtn.innerText = "Start";
+    timerButton.innerText = "Start";
     lapButton.innerText = "Restart";
 
     clearInterval(timerID);
@@ -102,27 +104,4 @@ function newLap() {
   lap.classList.add("lap");
   lap.innerHTML = lapMarkup;
   lapDisplay.insertBefore(lap, lapDivs[0]);
-}
-
-function formatTime(time) {
-  let formattedTime = null;
-  let formattedMillisecs = null;
-  const millisecs = time.getMilliseconds();
-
-  if (!millisecs || millisecs < 10) {
-    formattedMillisecs = "00";
-  } else if (millisecs < 99) {
-    formattedMillisecs = "0" + String(millisecs).slice(0, 1);
-  } else if (millisecs % 100 === 0) {
-    formattedMillisecs = String(millisecs).slice(0, 1) + "0";
-  } else {
-    formattedMillisecs = String(millisecs).slice(0, 2);
-  }
-
-  formattedTime = `${time.toLocaleTimeString("en", {
-    second: "2-digit",
-    minute: "2-digit",
-  })}.${formattedMillisecs}`;
-
-  return formattedTime;
 }
