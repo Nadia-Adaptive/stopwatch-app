@@ -1,4 +1,5 @@
 let completedLaps = 0;
+let hiddenLapDivs = 4;
 let timerID = null;
 let startTime, prevLapTime, stopTime, timeLapsed;
 
@@ -55,18 +56,15 @@ function newLap() {
 
   prevLapTime = currentTime;
 
-  for (const lap of lapDivs) {
-    if (!lap.innerHTML) {
-      lap.innerHTML = lapMarkup;
-      break;
-    }
+  if (hiddenLapDivs !== 0) {
+    lapDivs[4].classList.add("hidden");
+    hiddenLapDivs--;
   }
 
-  if (completedLaps === lapDivs.length) {
-    const lap = document.createElement("div");
-    lap.classList.add("lap");
-    lapDisplay.appendChild(lap);
-  }
+  const lap = document.createElement("div");
+  lap.classList.add("lap");
+  lap.innerHTML = lapMarkup;
+  lapDisplay.insertBefore(lap, lapDivs[0]);
 }
 
 function formatTime(time) {
