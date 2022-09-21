@@ -2,7 +2,7 @@ import { formatTime, NUM_OF_PREPOPULATED_DIVS } from "./utils.js";
 let startTime, prevLapTime, stopTime, timeLapsed;
 let timerID = null;
 
-function toggleTimer(timerControl, timerButton, lapButton) {
+function toggleStopwatchMode(timerControl, timerButton, lapButton) {
   if (timerControl.classList.contains("start")) {
     timerControl.classList.remove("start");
     timerControl.classList.add("stop");
@@ -42,4 +42,4 @@ function resetTimes() {
   stopTime = null;
 }
 
-export { toggleTimer, resetTimes };
+export { toggleStopwatchMode, resetTimes };

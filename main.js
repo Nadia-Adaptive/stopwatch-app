@@ -1,10 +1,10 @@
 import { formatTime, NUM_OF_PREPOPULATED_DIVS } from "./utils.js";
-import { toggleTimer, resetTimes } from "./timer.js";
+import { toggleStopwatchMode, resetTimes } from "./stopwatch.js";
 let completedLaps = 0;
 let hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
 let prevLapTime = 0;
 const lapButton = document.querySelector(".default > button");
-const timerButton = document.querySelector("#stopwatch-control > button");
+const stopwatchButton = document.querySelector("#stopwatch-control > button");
 
 let bestLapIndex = 1;
 let worstLapIndex = 1;
@@ -17,21 +17,21 @@ lapButton.onclick = () => {
   if (isStopwatchRunning()) {
     newLap();
   } else {
-    restartTimer(lapButton);
+    restartStopwatch(lapButton);
   }
 };
 
-timerButton.onclick = () => {
-  const timerControl = document.querySelector("#stopwatch-control");
+stopwatchButton.onclick = () => {
+  const stopwatchButton = document.querySelector("#stopwatch-control");
 
-  toggleTimer(timerControl, timerButton, lapButton);
+  toggleStopwatchMode(stopwatchButton, stopwatchButton, lapButton);
 };
 
 function isStopwatchRunning() {
-  return timerButton.parentElement.classList.contains("stop");
+  return stopwatchButton.parentElement.classList.contains("stop");
 }
 
-function restartTimer(lapButton) {
+function restartStopwatch(lapButton) {
   const timerDisplay = document.querySelector(".timer-display>span");
   const lapDisplay = document.querySelector("#lap-display");
   const lapDivs = document.querySelectorAll(".lap");
