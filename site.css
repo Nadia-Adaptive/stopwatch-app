@@ -108,6 +108,10 @@ div.circular {
   flex: 0 0 auto;
 }
 
+.best {
+  color: #30d158;
+}
+
 /* Utility classes */
 .hidden {
   display: none;
