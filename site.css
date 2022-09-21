@@ -108,7 +108,7 @@ div.circular {
   flex: 0 0 auto;
 }
 
-.best {
+.best-lap > span {
   color: #30d158;
 }
 

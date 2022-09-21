@@ -4,7 +4,7 @@ export function formatTime(time) {
   const millisecs = time % 1000; // Gets the reminder of time / 1000
 
   if (!millisecs || millisecs < 10) {
-    formattedMillisecs = "00";
+    formattedMillisecs = millisecs;
   } else if (millisecs < 99) {
     formattedMillisecs = "0" + String(millisecs).slice(0, 1);
   } else if (millisecs % 100 === 0) {
