@@ -1,4 +1,6 @@
-export function formatTime(time) {
+const NUM_OF_PREPOPULATED_DIVS = 5;
+
+function formatTime(time) {
   let formattedTime = null;
   let formattedMillisecs = null;
   const millisecs = time % 1000; // Gets the reminder of time / 1000
@@ -20,3 +22,4 @@ export function formatTime(time) {
 
   return formattedTime;
 }
+export { NUM_OF_PREPOPULATED_DIVS, formatTime };
