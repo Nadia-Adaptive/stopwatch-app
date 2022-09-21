@@ -26,7 +26,7 @@ function toggleTimer() {
     timerButton.innerText = "Stop";
     lapButton.innerText = "Lap";
 
-    startTime = new Date();
+    startTime = Date.now();
     timerID = setInterval(startStopwatch, 10);
   } else if (timerControl.classList.contains("stop")) {
     timerControl.classList.remove("stop");
@@ -68,13 +68,13 @@ function restartTimer() {
 function startStopwatch() {
   const timerText = document.querySelector(".timer-display>span");
 
-  let timeLapsedInSeconds = Date.now() - startTime.getTime();
+  let timeLapsedInSeconds = Date.now() - startTime;
 
   if (stopTime) {
-    timeLapsedInSeconds += stopTime.getTime();
+    timeLapsedInSeconds += stopTime;
   }
 
-  timeLapsed = new Date(timeLapsedInSeconds);
+  timeLapsed = timeLapsedInSeconds;
 
   timerText.innerText = `${formatTime(timeLapsed)}`;
 }
@@ -84,11 +84,11 @@ function newLap() {
   const lapDivs = document.querySelectorAll(".lap");
 
   if (!prevLapTime) {
-    prevLapTime = startTime.getTime();
+    prevLapTime = startTime;
   }
 
   const currentTime = Date.now();
-  const lapTime = new Date(currentTime - prevLapTime);
+  const lapTime = currentTime - prevLapTime;
   const lapMarkup = `<span>Lap ${++completedLaps}</span><span>${formatTime(
     lapTime
   )}</span>`;

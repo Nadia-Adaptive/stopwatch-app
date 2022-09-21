@@ -1,7 +1,7 @@
 export function formatTime(time) {
   let formattedTime = null;
   let formattedMillisecs = null;
-  const millisecs = time.getMilliseconds();
+  const millisecs = time % 1000; // Gets the reminder of time / 1000
 
   if (!millisecs || millisecs < 10) {
     formattedMillisecs = "00";
@@ -13,7 +13,7 @@ export function formatTime(time) {
     formattedMillisecs = String(millisecs).slice(0, 2);
   }
 
-  formattedTime = `${time.toLocaleTimeString("en", {
+  formattedTime = `${new Date(time).toLocaleTimeString("en", {
     second: "2-digit",
     minute: "2-digit",
   })}.${formattedMillisecs}`;
