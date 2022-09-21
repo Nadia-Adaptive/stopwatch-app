@@ -8,7 +8,8 @@ const lapButton = document.querySelector(".default > button");
 const timerControl = document.querySelector("#stopwatch-control");
 const timerButton = document.querySelector("#stopwatch-control > button");
 let bestLapIndex = 1;
-let prevWorstLap, bestLapTime, worstLapTime;
+let worstLapIndex = 1;
+let bestLapTime, worstLapTime;
 
 lapButton.onclick = () => {
   if (!isStopwatchRunning()) {
@@ -108,14 +109,15 @@ function newLap() {
   lapDisplay.insertBefore(lap, lapDivs[0]);
 
   calculateBestTime(lapTime);
+  calculateWorstTime(lapTime);
 }
 
 const calculateBestTime = (currentTime) => {
   if (bestLapTime >= currentTime) {
     const lapDivs = document.querySelectorAll(".lap");
     bestLapTime = currentTime;
-    lapDivs[0].classList.add("best-lap");
 
+    lapDivs[0].classList.add("best-lap");
     lapDivs[bestLapIndex].classList.remove("best-lap");
 
     bestLapIndex = 1;
@@ -123,5 +125,21 @@ const calculateBestTime = (currentTime) => {
     bestLapTime = currentTime;
   } else {
     bestLapIndex++;
+  }
+};
+
+const calculateWorstTime = (currentTime) => {
+  if (worstLapTime <= currentTime) {
+    const lapDivs = document.querySelectorAll(".lap");
+    worstLapTime = currentTime;
+
+    lapDivs[0].classList.add("worst-lap");
+    lapDivs[worstLapIndex].classList.remove("worst-lap");
+
+    worstLapIndex = 1;
+  } else if (!worstLapTime) {
+    worstLapTime = currentTime;
+  } else {
+    worstLapIndex++;
   }
 };

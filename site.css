@@ -112,6 +112,10 @@ div.circular {
   color: #30d158;
 }
 
+.worst-lap > span {
+  color: #ff453a;
+}
+
 /* Utility classes */
 .hidden {
   display: none;
