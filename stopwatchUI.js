@@ -65,6 +65,8 @@ const resetStopwatchUI = (lapDisplay, lapDivs, lapButton, stopwatchButton) => {
   timerDisplay.innerText = "00:00.00";
   lapButton.innerText = "Lap";
   stopwatchButton.innerText = "Start";
+  stopwatchButton.parentNode.classList.remove("stop");
+  stopwatchButton.parentNode.classList.add("start");
 
   hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
   completedLaps = 0;
