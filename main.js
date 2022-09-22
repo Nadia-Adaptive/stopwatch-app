@@ -1,4 +1,3 @@
-import { formatTime, NUM_OF_PREPOPULATED_DIVS } from "./utils.js";
 import {
   toggleStopwatchMode,
   resetTimes,
@@ -6,8 +5,9 @@ import {
   hasBestLapChanged,
   hasWorstLapChanged,
 } from "./stopwatch.js";
-let completedLaps = 0;
-let hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
+
+import { newLap, updateLap } from "./stopwatchUI.JS";
+
 let prevLapTime = 0;
 const lapButton = document.querySelector(".default > button");
 const stopwatchButton = document.querySelector("#stopwatch-control > button");
@@ -15,6 +15,7 @@ const stopwatchButton = document.querySelector("#stopwatch-control > button");
 lapButton.onclick = () => {
   const lapDisplay = document.querySelector("#lap-display");
   const lapDivs = document.querySelectorAll(".lap");
+
   if (!prevLapTime) {
     prevLapTime = Date.now();
   }
@@ -31,6 +32,7 @@ lapButton.onclick = () => {
   } else {
     restartStopwatch(lapDisplay, lapDivs, lapButton);
   }
+  prevLapTime = Date.now();
 };
 
 stopwatchButton.onclick = () => {
@@ -59,32 +61,4 @@ const restartStopwatch = (lapDisplay, lapDivs, lapButton) => {
       lap.classList.remove("hidden");
     }
   }
-};
-
-const newLap = (lapDisplay, lapDivs, lapTime) => {
-  const lapMarkup = `<span>Lap ${++completedLaps}</span><span>${formatTime(
-    lapTime
-  )}</span>`;
-
-  prevLapTime = Date.now();
-
-  if (hiddenLapDivs !== 0) {
-    lapDivs[4].classList.add("hidden");
-    hiddenLapDivs--;
-  }
-
-  const lap = document.createElement("div");
-  lap.classList.add("lap");
-  lap.innerHTML = lapMarkup;
-  return lapDisplay.insertBefore(lap, lapDivs[0]);
-};
-
-const updateLap = (latestLap, newClass) => {
-  const prevBestLap = document.querySelector(`.${newClass}`);
-
-  if (prevBestLap) {
-    prevBestLap.classList.remove(`${newClass}`);
-  }
-
-  latestLap.classList.add(`${newClass}`);
 };
