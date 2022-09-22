@@ -22,8 +22,12 @@ const updateStopwatchTime = () => {
   return timeLapsed;
 };
 
-const resetTimes = () => {
+const resetStopwatchTimes = () => {
   stopTime = null;
+  startTime = null;
+  bestLapTime = null;
+  worstLapTime = null;
+  timeLapsed = null;
 };
 
 const calculateLapDifference = (prevLapTime) => {
@@ -52,7 +56,7 @@ const hasWorstLapChanged = (currentTime, latestLap) => {
 };
 
 export {
-  resetTimes,
+  resetStopwatchTimes,
   calculateLapDifference,
   hasBestLapChanged,
   hasWorstLapChanged,

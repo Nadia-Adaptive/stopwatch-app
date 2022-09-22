@@ -1,5 +1,5 @@
 import {
-  resetTimes,
+  resetStopwatchTimes,
   calculateLapDifference,
   hasBestLapChanged,
   hasWorstLapChanged,
@@ -8,6 +8,7 @@ import {
   updateStopwatchTime,
 } from "./stopwatch.js";
 import {
+  resetStopwatchUI,
   toggleStopwatchControlUI,
   updateStopwatchDisplay,
 } from "./stopwatchUI.js";
@@ -59,19 +60,7 @@ const updateStopwatch = () => {
   updateStopwatchDisplay(timeLapsed);
 };
 
-const restartStopwatch = (lapDisplay, lapDivs, lapButton) => {
-  const timerDisplay = document.querySelector(".timer-display>span");
-  timerDisplay.innerText = "00:00.00";
-  lapButton.innerText = "Lap";
-
-  hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
-  completedLaps = 0;
-
-  for (const lap of lapDivs) {
-    if (!lap.classList.contains("hidden")) {
-      lapDisplay.removeChild(lap);
-    } else {
-      lap.classList.remove("hidden");
-    }
-  }
+const restartStopwatch = (lapDisplay, lapDivs) => {
+  resetStopwatchUI(lapDisplay, lapDivs, lapButton, stopwatchButton);
+  resetStopwatchTimes();
 };

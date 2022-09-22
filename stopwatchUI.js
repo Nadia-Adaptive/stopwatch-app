@@ -60,4 +60,28 @@ const updateStopwatchDisplay = (timeLapsed) => {
   timerText.innerText = `${formatTime(timeLapsed)}`;
 };
 
-export { updateLap, newLap, toggleStopwatchControlUI, updateStopwatchDisplay };
+const resetStopwatchUI = (lapDisplay, lapDivs, lapButton, stopwatchButton) => {
+  const timerDisplay = document.querySelector(".timer-display>span");
+  timerDisplay.innerText = "00:00.00";
+  lapButton.innerText = "Lap";
+  stopwatchButton.innerText = "Start";
+
+  hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
+  completedLaps = 0;
+
+  for (const lap of lapDivs) {
+    if (!lap.classList.contains("hidden")) {
+      lapDisplay.removeChild(lap);
+    } else {
+      lap.classList.remove("hidden");
+    }
+  }
+};
+
+export {
+  updateLap,
+  newLap,
+  resetStopwatchUI,
+  toggleStopwatchControlUI,
+  updateStopwatchDisplay,
+};
