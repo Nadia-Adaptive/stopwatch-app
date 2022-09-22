@@ -70,7 +70,7 @@ const resetStopwatchUI = (lapDisplay, lapDivs, lapButton, stopwatchButton) => {
   completedLaps = 0;
 
   for (const lap of lapDivs) {
-    if (!lap.classList.contains("hidden")) {
+    if (!lap.classList.contains("hidden") && lap.innerHTML) {
       lapDisplay.removeChild(lap);
     } else {
       lap.classList.remove("hidden");
