@@ -10,7 +10,6 @@ let prevLapTime = 0;
 const lapButton = document.querySelector(".default > button");
 const stopwatchButton = document.querySelector("#stopwatch-control > button");
 
-let worstLapIndex = 1;
 let bestLapTime, worstLapTime;
 
 lapButton.onclick = () => {
@@ -35,11 +34,11 @@ stopwatchButton.onclick = () => {
   toggleStopwatchMode(stopwatchControl, stopwatchButton, lapButton);
 };
 
-function isStopwatchRunning() {
+const isStopwatchRunning = () => {
   return stopwatchButton.parentElement.classList.contains("stop");
-}
+};
 
-function restartStopwatch(lapDisplay, lapDivs, lapButton) {
+const restartStopwatch = (lapDisplay, lapDivs, lapButton) => {
   const timerDisplay = document.querySelector(".timer-display>span");
   timerDisplay.innerText = "00:00.00";
   lapButton.innerText = "Lap";
@@ -55,9 +54,9 @@ function restartStopwatch(lapDisplay, lapDivs, lapButton) {
       lap.classList.remove("hidden");
     }
   }
-}
+};
 
-function newLap(lapDisplay, lapDivs, lapTime) {
+const newLap = (lapDisplay, lapDivs, lapTime) => {
   const lapMarkup = `<span>Lap ${++completedLaps}</span><span>${formatTime(
     lapTime
   )}</span>`;
@@ -73,7 +72,7 @@ function newLap(lapDisplay, lapDivs, lapTime) {
   lap.classList.add("lap");
   lap.innerHTML = lapMarkup;
   return lapDisplay.insertBefore(lap, lapDivs[0]);
-}
+};
 
 const calculateBestTime = (currentTime, latestLap) => {
   if (bestLapTime >= currentTime) {

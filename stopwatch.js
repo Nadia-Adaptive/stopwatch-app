@@ -2,7 +2,7 @@ import { formatTime, NUM_OF_PREPOPULATED_DIVS } from "./utils.js";
 let startTime, prevLapTime, stopTime, timeLapsed;
 let timerID = null;
 
-function toggleStopwatchMode(timerControl, timerButton, lapButton) {
+const toggleStopwatchMode = (timerControl, timerButton, lapButton) => {
   if (timerControl.classList.contains("start")) {
     timerControl.classList.remove("start");
     timerControl.classList.add("stop");
@@ -22,9 +22,9 @@ function toggleStopwatchMode(timerControl, timerButton, lapButton) {
     clearInterval(timerID);
     stopTime = timeLapsed;
   }
-}
+};
 
-function startStopwatch() {
+const startStopwatch = () => {
   const timerText = document.querySelector(".timer-display>span");
 
   let timeLapsedInSeconds = Date.now() - startTime;
@@ -36,11 +36,11 @@ function startStopwatch() {
   timeLapsed = timeLapsedInSeconds;
 
   timerText.innerText = `${formatTime(timeLapsed)}`;
-}
+};
 
-function resetTimes() {
+const resetTimes = () => {
   stopTime = null;
-}
+};
 
 const calculateLapDifference = (prevLapTime) => {
   const currentTime = Date.now();
