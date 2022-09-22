@@ -1,9 +1,10 @@
-let startTime, prevLapTime, stopTime, timeLapsed;
+let startTime, startLapTime, stopTime, timeLapsed, lapTimeLapsed;
 let timerID = null;
 let bestLapTime, worstLapTime;
 
 const startStopwatch = (callback) => {
   startTime = Date.now();
+  startLapTime = Date.now();
   timerID = setInterval(callback, 10);
 };
 const stopStopwatch = () => {
@@ -22,6 +23,17 @@ const updateStopwatchTime = () => {
   return timeLapsed;
 };
 
+const updateLapTime = () => {
+  let timeLapsedInMilliseconds = Date.now() - startLapTime;
+
+  if (stopTime) {
+    timeLapsedInMilliseconds += stopTime;
+  }
+
+  lapTimeLapsed = timeLapsedInMilliseconds;
+  return lapTimeLapsed;
+};
+
 const resetStopwatchTimes = () => {
   stopTime = null;
   startTime = null;
@@ -32,9 +44,11 @@ const resetStopwatchTimes = () => {
 
 const calculateLapDifference = (prevLapTime) => {
   const currentTime = Date.now();
+  startLapTime = currentTime;
   if (!prevLapTime) {
     return currentTime - startTime;
   }
+  lapTimeLapsed = 0;
   return currentTime - prevLapTime;
 };
 
@@ -66,4 +80,5 @@ export {
   startStopwatch,
   stopStopwatch,
   updateStopwatchTime,
+  updateLapTime,
 };

@@ -1,4 +1,5 @@
 let hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
+const LAST_LAP_DIV = NUM_OF_PREPOPULATED_DIVS;
 import {
   formatTime,
   isStopwatchRunning,
@@ -21,7 +22,7 @@ const newLap = (lapDisplay, lapDivs, lapTime) => {
   )}</span>`;
 
   if (hiddenLapDivs !== 0) {
-    lapDivs[4].classList.add("hidden");
+    lapDivs[LAST_LAP_DIV].classList.add("hidden");
     hiddenLapDivs--;
   }
 
@@ -56,9 +57,15 @@ const toggleStopwatchControlUI = (
   lapButton.innerText = lapButtonText;
 };
 
-const updateStopwatchDisplay = (timeLapsed) => {
-  const timerText = document.querySelector(".timer-display>span");
-  timerText.innerText = `${formatTime(timeLapsed)}`;
+const updateStopwatchDisplay = (timeLapsed, lapTimeLapsed) => {
+  const stopwatchText = document.querySelector(".timer-display>span");
+  const lapDivs = document.querySelectorAll(".lap");
+  const lapTimeText = lapDivs[0];
+
+  stopwatchText.innerText = `${formatTime(timeLapsed)}`;
+  lapTimeText.innerHTML = `<span>Lap ${
+    lapDivs.length - 5
+  }</span> <span>${formatTime(lapTimeLapsed)}</span>`;
 };
 
 const resetStopwatchUI = (lapDisplay, lapDivs, lapButton, stopwatchButton) => {

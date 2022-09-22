@@ -6,6 +6,7 @@ import {
   stopStopwatch,
   startStopwatch,
   updateStopwatchTime,
+  updateLapTime,
 } from "./stopwatch.js";
 
 import {
@@ -30,11 +31,11 @@ lapButton.onclick = () => {
     const latestLap = newLap(lapDisplay, lapDivs, lapTime);
 
     if (hasBestLapChanged(lapTime)) {
-      updateLap(latestLap, "best-lap");
+      updateLap(latestLap.nextElementSibling, "best-lap");
     }
 
     if (hasWorstLapChanged(lapTime)) {
-      updateLap(latestLap, "worst-lap");
+      updateLap(latestLap.nextElementSibling, "worst-lap");
     }
   } else {
     restartStopwatch(lapDisplay, lapDivs, lapButton);
@@ -57,7 +58,8 @@ stopwatchButton.onclick = () => {
 
 const updateStopwatch = () => {
   const timeLapsed = updateStopwatchTime();
-  updateStopwatchDisplay(timeLapsed);
+  const lapTimeLapsed = updateLapTime();
+  updateStopwatchDisplay(timeLapsed, lapTimeLapsed);
 };
 
 const restartStopwatch = (lapDisplay, lapDivs) => {
