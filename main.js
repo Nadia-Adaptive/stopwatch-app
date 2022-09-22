@@ -5,8 +5,10 @@ import {
   hasBestLapChanged,
   hasWorstLapChanged,
 } from "./stopwatch.js";
+import { toggleStopwatchControlUI } from "./stopwatchUI.js";
 
 import { newLap, updateLap } from "./stopwatchUI.JS";
+import { isStopwatchRunning, toggleIsStopwatchRunning } from "./utils.js";
 
 let prevLapTime = 0;
 const lapButton = document.querySelector(".default > button");
@@ -19,7 +21,7 @@ lapButton.onclick = () => {
   if (!prevLapTime) {
     prevLapTime = Date.now();
   }
-  if (isStopwatchRunning()) {
+  if (isStopwatchRunning) {
     const lapTime = calculateLapDifference(prevLapTime);
     const latestLap = newLap(lapDisplay, lapDivs, lapTime);
     if (hasBestLapChanged(lapTime)) {
@@ -37,12 +39,9 @@ lapButton.onclick = () => {
 
 stopwatchButton.onclick = () => {
   const stopwatchControl = document.querySelector("#stopwatch-control");
-
-  toggleStopwatchMode(stopwatchControl, stopwatchButton, lapButton);
-};
-
-const isStopwatchRunning = () => {
-  return stopwatchButton.parentElement.classList.contains("stop");
+  toggleIsStopwatchRunning();
+  toggleStopwatchMode();
+  toggleStopwatchControlUI(stopwatchControl, stopwatchButton, lapButton);
 };
 
 const restartStopwatch = (lapDisplay, lapDivs, lapButton) => {
@@ -50,7 +49,6 @@ const restartStopwatch = (lapDisplay, lapDivs, lapButton) => {
   timerDisplay.innerText = "00:00.00";
   lapButton.innerText = "Lap";
 
-  resetTimes();
   hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
   completedLaps = 0;
 

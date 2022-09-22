@@ -1,25 +1,17 @@
-import { formatTime, NUM_OF_PREPOPULATED_DIVS } from "./utils.js";
+import {
+  formatTime,
+  isStopwatchRunning,
+  NUM_OF_PREPOPULATED_DIVS,
+} from "./utils.js";
 let startTime, prevLapTime, stopTime, timeLapsed;
 let timerID = null;
 let bestLapTime, worstLapTime;
 
-const toggleStopwatchMode = (timerControl, timerButton, lapButton) => {
-  if (timerControl.classList.contains("start")) {
-    timerControl.classList.remove("start");
-    timerControl.classList.add("stop");
-
-    timerButton.innerText = "Stop";
-    lapButton.innerText = "Lap";
-
+const toggleStopwatchMode = () => {
+  if (isStopwatchRunning) {
     startTime = Date.now();
     timerID = setInterval(startStopwatch, 10);
-  } else if (timerControl.classList.contains("stop")) {
-    timerControl.classList.remove("stop");
-    timerControl.classList.add("start");
-
-    timerButton.innerText = "Start";
-    lapButton.innerText = "Restart";
-
+  } else {
     clearInterval(timerID);
     stopTime = timeLapsed;
   }
