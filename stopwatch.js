@@ -1,34 +1,25 @@
-import {
-  formatTime,
-  isStopwatchRunning,
-  NUM_OF_PREPOPULATED_DIVS,
-} from "./utils.js";
 let startTime, prevLapTime, stopTime, timeLapsed;
 let timerID = null;
 let bestLapTime, worstLapTime;
 
-const toggleStopwatchMode = () => {
-  if (isStopwatchRunning) {
-    startTime = Date.now();
-    timerID = setInterval(startStopwatch, 10);
-  } else {
-    clearInterval(timerID);
-    stopTime = timeLapsed;
-  }
+const startStopwatch = (callback) => {
+  startTime = Date.now();
+  timerID = setInterval(callback, 10);
+};
+const stopStopwatch = () => {
+  clearInterval(timerID);
+  stopTime = timeLapsed;
 };
 
-const startStopwatch = () => {
-  const timerText = document.querySelector(".timer-display>span");
-
-  let timeLapsedInSeconds = Date.now() - startTime;
+const updateStopwatchTime = () => {
+  let timeLapsedInMilliseconds = Date.now() - startTime;
 
   if (stopTime) {
-    timeLapsedInSeconds += stopTime;
+    timeLapsedInMilliseconds += stopTime;
   }
 
-  timeLapsed = timeLapsedInSeconds;
-
-  timerText.innerText = `${formatTime(timeLapsed)}`;
+  timeLapsed = timeLapsedInMilliseconds;
+  return timeLapsed;
 };
 
 const resetTimes = () => {
@@ -61,9 +52,11 @@ const hasWorstLapChanged = (currentTime, latestLap) => {
 };
 
 export {
-  toggleStopwatchMode,
   resetTimes,
   calculateLapDifference,
   hasBestLapChanged,
   hasWorstLapChanged,
+  startStopwatch,
+  stopStopwatch,
+  updateStopwatchTime,
 };

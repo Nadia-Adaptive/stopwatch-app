@@ -1,11 +1,16 @@
 import {
-  toggleStopwatchMode,
   resetTimes,
   calculateLapDifference,
   hasBestLapChanged,
   hasWorstLapChanged,
+  stopStopwatch,
+  startStopwatch,
+  updateStopwatchTime,
 } from "./stopwatch.js";
-import { toggleStopwatchControlUI } from "./stopwatchUI.js";
+import {
+  toggleStopwatchControlUI,
+  updateStopwatchDisplay,
+} from "./stopwatchUI.js";
 
 import { newLap, updateLap } from "./stopwatchUI.JS";
 import { isStopwatchRunning, toggleIsStopwatchRunning } from "./utils.js";
@@ -40,8 +45,18 @@ lapButton.onclick = () => {
 stopwatchButton.onclick = () => {
   const stopwatchControl = document.querySelector("#stopwatch-control");
   toggleIsStopwatchRunning();
-  toggleStopwatchMode();
+  if (isStopwatchRunning) {
+    startStopwatch(updateStopwatch);
+  } else {
+    stopStopwatch();
+  }
+
   toggleStopwatchControlUI(stopwatchControl, stopwatchButton, lapButton);
+};
+
+const updateStopwatch = () => {
+  const timeLapsed = updateStopwatchTime();
+  updateStopwatchDisplay(timeLapsed);
 };
 
 const restartStopwatch = (lapDisplay, lapDivs, lapButton) => {

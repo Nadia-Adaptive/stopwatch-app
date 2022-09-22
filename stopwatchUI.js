@@ -55,4 +55,9 @@ const toggleStopwatchControlUI = (
   lapButton.innerText = "Lap";
 };
 
-export { updateLap, newLap, toggleStopwatchControlUI };
+const updateStopwatchDisplay = (timeLapsed) => {
+  const timerText = document.querySelector(".timer-display>span");
+  timerText.innerText = `${formatTime(timeLapsed)}`;
+};
+
+export { updateLap, newLap, toggleStopwatchControlUI, updateStopwatchDisplay };
