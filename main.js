@@ -4,14 +4,13 @@ import {
   resetTimes,
   calculateLapDifference,
   hasBestLapChanged,
+  hasWorstLapChanged,
 } from "./stopwatch.js";
 let completedLaps = 0;
 let hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
 let prevLapTime = 0;
 const lapButton = document.querySelector(".default > button");
 const stopwatchButton = document.querySelector("#stopwatch-control > button");
-
-let worstLapTime;
 
 lapButton.onclick = () => {
   const lapDisplay = document.querySelector("#lap-display");
@@ -23,9 +22,12 @@ lapButton.onclick = () => {
     const lapTime = calculateLapDifference(prevLapTime);
     const latestLap = newLap(lapDisplay, lapDivs, lapTime);
     if (hasBestLapChanged(lapTime)) {
-      updateBestLap(latestLap);
+      updateLap(latestLap, "best-lap");
     }
-    calculateWorstTime(lapTime, latestLap);
+
+    if (hasWorstLapChanged(lapTime)) {
+      updateLap(latestLap, "worst-lap");
+    }
   } else {
     restartStopwatch(lapDisplay, lapDivs, lapButton);
   }
@@ -77,27 +79,12 @@ const newLap = (lapDisplay, lapDivs, lapTime) => {
   return lapDisplay.insertBefore(lap, lapDivs[0]);
 };
 
-const updateBestLap = (latestLap) => {
-  const prevBestLap = document.querySelector(".best-lap");
+const updateLap = (latestLap, newClass) => {
+  const prevBestLap = document.querySelector(`.${newClass}`);
 
   if (prevBestLap) {
-    prevBestLap.classList.remove("best-lap");
+    prevBestLap.classList.remove(`${newClass}`);
   }
 
-  latestLap.classList.add("best-lap");
-};
-
-const calculateWorstTime = (currentTime, latestLap) => {
-  if (worstLapTime <= currentTime) {
-    worstLapTime = currentTime;
-    const prevWorstLap = document.querySelector(".worst-lap");
-
-    if (prevWorstLap) {
-      prevWorstLap.classList.remove("worst-lap");
-    }
-
-    latestLap.classList.add("worst-lap");
-  } else if (!worstLapTime) {
-    worstLapTime = currentTime;
-  }
+  latestLap.classList.add(`${newClass}`);
 };

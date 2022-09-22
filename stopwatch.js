@@ -1,7 +1,7 @@
 import { formatTime, NUM_OF_PREPOPULATED_DIVS } from "./utils.js";
 let startTime, prevLapTime, stopTime, timeLapsed;
 let timerID = null;
-let bestLapTime;
+let bestLapTime, worstLapTime;
 
 const toggleStopwatchMode = (timerControl, timerButton, lapButton) => {
   if (timerControl.classList.contains("start")) {
@@ -58,9 +58,20 @@ const hasBestLapChanged = (currentTime) => {
   return null;
 };
 
+const hasWorstLapChanged = (currentTime, latestLap) => {
+  if (worstLapTime <= currentTime) {
+    worstLapTime = currentTime;
+    return true;
+  } else if (!worstLapTime) {
+    worstLapTime = currentTime;
+  }
+  return false;
+};
+
 export {
   toggleStopwatchMode,
   resetTimes,
   calculateLapDifference,
   hasBestLapChanged,
+  hasWorstLapChanged,
 };
