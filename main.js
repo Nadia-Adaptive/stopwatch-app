@@ -1,41 +1,46 @@
 import { formatTime, NUM_OF_PREPOPULATED_DIVS } from "./utils.js";
-import { toggleStopwatchMode, resetTimes } from "./stopwatch.js";
+import {
+  toggleStopwatchMode,
+  resetTimes,
+  calculateLapDifference,
+} from "./stopwatch.js";
 let completedLaps = 0;
 let hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
 let prevLapTime = 0;
 const lapButton = document.querySelector(".default > button");
 const stopwatchButton = document.querySelector("#stopwatch-control > button");
 
-let bestLapIndex = 1;
 let worstLapIndex = 1;
 let bestLapTime, worstLapTime;
 
 lapButton.onclick = () => {
+  const lapDisplay = document.querySelector("#lap-display");
+  const lapDivs = document.querySelectorAll(".lap");
   if (!prevLapTime) {
     prevLapTime = Date.now();
   }
   if (isStopwatchRunning()) {
-    newLap();
+    const lapTime = calculateLapDifference(prevLapTime);
+    const latestLap = newLap(lapDisplay, lapDivs, lapTime);
+    calculateBestTime(lapTime, latestLap);
+    calculateWorstTime(lapTime, latestLap);
   } else {
-    restartStopwatch(lapButton);
+    restartStopwatch(lapDisplay, lapDivs, lapButton);
   }
 };
 
 stopwatchButton.onclick = () => {
-  const stopwatchButton = document.querySelector("#stopwatch-control");
+  const stopwatchControl = document.querySelector("#stopwatch-control");
 
-  toggleStopwatchMode(stopwatchButton, stopwatchButton, lapButton);
+  toggleStopwatchMode(stopwatchControl, stopwatchButton, lapButton);
 };
 
 function isStopwatchRunning() {
   return stopwatchButton.parentElement.classList.contains("stop");
 }
 
-function restartStopwatch(lapButton) {
+function restartStopwatch(lapDisplay, lapDivs, lapButton) {
   const timerDisplay = document.querySelector(".timer-display>span");
-  const lapDisplay = document.querySelector("#lap-display");
-  const lapDivs = document.querySelectorAll(".lap");
-
   timerDisplay.innerText = "00:00.00";
   lapButton.innerText = "Lap";
 
@@ -52,17 +57,12 @@ function restartStopwatch(lapButton) {
   }
 }
 
-function newLap() {
-  const lapDisplay = document.querySelector("#lap-display");
-  const lapDivs = document.querySelectorAll(".lap");
-
-  const currentTime = Date.now();
-  const lapTime = currentTime - prevLapTime;
+function newLap(lapDisplay, lapDivs, lapTime) {
   const lapMarkup = `<span>Lap ${++completedLaps}</span><span>${formatTime(
     lapTime
   )}</span>`;
 
-  prevLapTime = currentTime;
+  prevLapTime = Date.now();
 
   if (hiddenLapDivs !== 0) {
     lapDivs[4].classList.add("hidden");
@@ -72,40 +72,35 @@ function newLap() {
   const lap = document.createElement("div");
   lap.classList.add("lap");
   lap.innerHTML = lapMarkup;
-  lapDisplay.insertBefore(lap, lapDivs[0]);
-
-  calculateBestTime(lapTime);
-  calculateWorstTime(lapTime);
+  return lapDisplay.insertBefore(lap, lapDivs[0]);
 }
 
-const calculateBestTime = (currentTime) => {
+const calculateBestTime = (currentTime, latestLap) => {
   if (bestLapTime >= currentTime) {
-    const lapDivs = document.querySelectorAll(".lap");
     bestLapTime = currentTime;
+    const prevBestLap = document.querySelector(".best-lap");
 
-    lapDivs[0].classList.add("best-lap");
-    lapDivs[bestLapIndex].classList.remove("best-lap");
+    if (prevBestLap) {
+      prevBestLap.classList.remove("best-lap");
+    }
 
-    bestLapIndex = 1;
+    latestLap.classList.add("best-lap");
   } else if (!bestLapTime) {
     bestLapTime = currentTime;
-  } else {
-    bestLapIndex++;
   }
 };
 
-const calculateWorstTime = (currentTime) => {
+const calculateWorstTime = (currentTime, latestLap) => {
   if (worstLapTime <= currentTime) {
-    const lapDivs = document.querySelectorAll(".lap");
     worstLapTime = currentTime;
+    const prevWorstLap = document.querySelector(".worst-lap");
 
-    lapDivs[0].classList.add("worst-lap");
-    lapDivs[worstLapIndex].classList.remove("worst-lap");
+    if (prevWorstLap) {
+      prevWorstLap.classList.remove("worst-lap");
+    }
 
-    worstLapIndex = 1;
+    latestLap.classList.add("worst-lap");
   } else if (!worstLapTime) {
     worstLapTime = currentTime;
-  } else {
-    worstLapIndex++;
   }
 };

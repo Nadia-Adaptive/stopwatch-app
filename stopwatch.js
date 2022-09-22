@@ -42,4 +42,9 @@ function resetTimes() {
   stopTime = null;
 }
 
-export { toggleStopwatchMode, resetTimes };
+const calculateLapDifference = (prevLapTime) => {
+  const currentTime = Date.now();
+  return currentTime - prevLapTime;
+};
+
+export { toggleStopwatchMode, resetTimes, calculateLapDifference };
