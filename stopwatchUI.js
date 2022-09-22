@@ -36,13 +36,15 @@ const toggleStopwatchControlUI = (
   stopwatchButton,
   lapButton
 ) => {
-  let classToRemove, classToAdd;
+  let classToRemove, classToAdd, lapButtonText;
   if (isStopwatchRunning) {
-    classToAdd = "start";
-    classToRemove = "stop";
-  } else {
     classToAdd = "stop";
     classToRemove = "start";
+    lapButtonText = "Lap";
+  } else {
+    classToAdd = "start";
+    classToRemove = "stop";
+    lapButtonText = "Restart";
   }
 
   stopwatchControl.classList.remove(classToRemove);
@@ -51,7 +53,7 @@ const toggleStopwatchControlUI = (
   stopwatchButton.innerText = `${classToAdd
     .charAt(0)
     .toUpperCase()}${classToAdd.slice(1)}`;
-  lapButton.innerText = "Lap";
+  lapButton.innerText = lapButtonText;
 };
 
 const updateStopwatchDisplay = (timeLapsed) => {
