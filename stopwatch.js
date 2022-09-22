@@ -32,6 +32,9 @@ const resetStopwatchTimes = () => {
 
 const calculateLapDifference = (prevLapTime) => {
   const currentTime = Date.now();
+  if (!prevLapTime) {
+    return currentTime - startTime;
+  }
   return currentTime - prevLapTime;
 };
 

@@ -24,9 +24,6 @@ lapButton.onclick = () => {
   const lapDisplay = document.querySelector("#lap-display");
   const lapDivs = document.querySelectorAll(".lap");
 
-  if (!prevLapTime) {
-    prevLapTime = Date.now();
-  }
   if (isStopwatchRunning) {
     const lapTime = calculateLapDifference(prevLapTime);
     const latestLap = newLap(lapDisplay, lapDivs, lapTime);
