@@ -45,7 +45,7 @@ const hasBestLapChanged = (currentTime) => {
   return null;
 };
 
-const hasWorstLapChanged = (currentTime, latestLap) => {
+const hasWorstLapChanged = (currentTime) => {
   if (worstLapTime <= currentTime) {
     worstLapTime = currentTime;
     return true;

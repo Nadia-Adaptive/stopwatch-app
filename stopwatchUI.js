@@ -1,4 +1,3 @@
-let completedLaps = 0;
 let hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
 import {
   formatTime,
@@ -17,7 +16,7 @@ const updateLap = (latestLap, newClass) => {
 };
 
 const newLap = (lapDisplay, lapDivs, lapTime) => {
-  const lapMarkup = `<span>Lap ${++completedLaps}</span><span>${formatTime(
+  const lapMarkup = `<span>Lap ${lapDivs.length - 4}</span><span>${formatTime(
     lapTime
   )}</span>`;
 
@@ -69,7 +68,6 @@ const resetStopwatchUI = (lapDisplay, lapDivs, lapButton, stopwatchButton) => {
   stopwatchButton.parentNode.classList.add("start");
 
   hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
-  completedLaps = 0;
 
   for (const lap of lapDivs) {
     if (!lap.classList.contains("hidden") && lap.innerHTML) {
@@ -79,7 +77,6 @@ const resetStopwatchUI = (lapDisplay, lapDivs, lapButton, stopwatchButton) => {
     }
   }
 };
-
 export {
   updateLap,
   newLap,
