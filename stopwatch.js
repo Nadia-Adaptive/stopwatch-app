@@ -2,13 +2,12 @@ let startTime, startLapTime, stopTime, timeLapsed, lapTimeLapsed;
 let timerID = null;
 let bestLapTime, worstLapTime;
 
-const startStopwatch = (callback) => {
+const startStopwatch = () => {
   startTime = Date.now();
   startLapTime = Date.now();
-  timerID = setInterval(callback, 10);
 };
-const stopStopwatch = () => {
-  clearInterval(timerID);
+const stopStopwatch = (timerID) => {
+  cancelAnimationFrame(timerID);
   stopTime = timeLapsed;
 };
 
