@@ -1,4 +1,4 @@
-import { formatTime, isStopwatchRunning } from "./utils.js";
+import { formatTime } from "./utils.js";
 
 const updateLap = (latestLap, newClass) => {
   const prevBestLap = document.querySelector(`.${newClass}`);
@@ -26,23 +26,18 @@ const toggleStopwatchControlUI = (
   stopwatchButton,
   lapButton
 ) => {
-  let classToRemove, classToAdd, lapButtonText;
-  if (isStopwatchRunning) {
-    classToAdd = "stop";
-    classToRemove = "start";
-    lapButtonText = "Lap";
-  } else {
-    classToAdd = "start";
-    classToRemove = "stop";
+  let stopwatchButtonText, lapButtonText;
+  if (stopwatchControl.classList.toggle("start")) {
+    stopwatchButtonText = "Start";
     lapButtonText = "Restart";
   }
 
-  stopwatchControl.classList.remove(classToRemove);
-  stopwatchControl.classList.add(classToAdd);
+  if (stopwatchControl.classList.toggle("stop")) {
+    stopwatchButtonText = "Stop";
+    lapButtonText = "Lap";
+  }
 
-  stopwatchButton.innerText = `${classToAdd
-    .charAt(0)
-    .toUpperCase()}${classToAdd.slice(1)}`;
+  stopwatchButton.innerText = stopwatchButtonText;
   lapButton.innerText = lapButtonText;
 };
 
