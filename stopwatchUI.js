@@ -21,10 +21,10 @@ const newLap = (lapDisplay, lapDivs, lapTime) => {
     lapTime
   )}</span>`;
 
-  if (hiddenLapDivs !== 0) {
-    lapDivs[LAST_LAP_DIV].classList.add("hidden");
-    hiddenLapDivs--;
-  }
+  // if (hiddenLapDivs !== 0) {
+  //   lapDivs[LAST_LAP_DIV].classList.add("hidden");
+  //   hiddenLapDivs--;
+  // }
 
   const lap = document.createElement("div");
   lap.classList.add("lap");
@@ -64,7 +64,7 @@ const updateStopwatchDisplay = (timeLapsed, lapTimeLapsed) => {
 
   stopwatchText.innerText = `${formatTime(timeLapsed)}`;
   lapTimeText.innerHTML = `<span>Lap ${
-    lapDivs.length - 5
+    lapDivs.length
   }</span> <span>${formatTime(lapTimeLapsed)}</span>`;
 };
 
@@ -78,13 +78,10 @@ const resetStopwatchUI = (lapDisplay, lapDivs, lapButton, stopwatchButton) => {
 
   hiddenLapDivs = NUM_OF_PREPOPULATED_DIVS;
 
-  for (const lap of lapDivs) {
-    if (!lap.classList.contains("hidden") && lap.innerHTML) {
-      lapDisplay.removeChild(lap);
-    } else {
-      lap.classList.remove("hidden");
-    }
-  }
+  lapDisplay.innerHTML = "";
+  const lap = document.createElement("div");
+  lap.classList.add("lap");
+  lapDisplay.appendChild(lap);
 };
 export {
   updateLap,
