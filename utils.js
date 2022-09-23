@@ -1,4 +1,3 @@
-const NUM_OF_PREPOPULATED_DIVS = 5;
 let isStopwatchRunning = false;
 
 const toggleIsStopwatchRunning = () =>
@@ -18,9 +17,4 @@ const formatTime = (time) => {
 
   return formattedTime;
 };
-export {
-  NUM_OF_PREPOPULATED_DIVS,
-  isStopwatchRunning,
-  toggleIsStopwatchRunning,
-  formatTime,
-};
+export { isStopwatchRunning, toggleIsStopwatchRunning, formatTime };

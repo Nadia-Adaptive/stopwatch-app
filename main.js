@@ -39,7 +39,7 @@ lapButton.onclick = () => {
       updateLap(latestLap.nextElementSibling, "worst-lap");
     }
   } else {
-    restartStopwatch(lapDisplay, lapDivs, lapButton);
+    restartStopwatch(lapDisplay, lapButton);
   }
   prevLapTime = Date.now();
 };
@@ -65,7 +65,7 @@ const updateStopwatch = () => {
   timerID = requestAnimationFrame(updateStopwatch);
 };
 
-const restartStopwatch = (lapDisplay, lapDivs) => {
-  resetStopwatchUI(lapDisplay, lapDivs, lapButton, stopwatchButton);
+const restartStopwatch = (lapDisplay) => {
+  resetStopwatchUI(lapDisplay, lapButton, stopwatchButton);
   resetStopwatchTimes();
 };
