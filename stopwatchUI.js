@@ -28,7 +28,7 @@ const toggleStopwatchControlUI = (
 ) => {
   let stopwatchButtonText, lapButtonText;
   if (stopwatchControl.classList.toggle("start")) {
-    stopwatchButtonText = "Start";
+    stopwatchButton.innerText = "Start";
     lapButtonText = "Restart";
   }
 

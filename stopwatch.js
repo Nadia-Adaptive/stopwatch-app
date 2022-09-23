@@ -1,5 +1,4 @@
 let startTime, startLapTime, stopTime, timeLapsed, lapTimeLapsed;
-let timerID = null;
 let bestLapTime, worstLapTime;
 
 const startStopwatch = () => {
