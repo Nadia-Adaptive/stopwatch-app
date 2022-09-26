@@ -5,6 +5,7 @@ import {
   updateTime,
   startStopwatch,
   stopStopwatch,
+  resetStopwatchTimes,
 } from "./stopwatch.js";
 
 import {
@@ -33,20 +34,36 @@ window.onload = () => {
   lapButton.onclick = () => {
     const lapDisplay = document.querySelector("#lap-display");
     const lapDivs = document.querySelectorAll(".lap");
-    const { bestLapTime, worstLapTime } = state;
+    const { bestLapTime, worstLapTime, prevLapTime } = state;
 
     if (isStopwatchRunning) {
       const lapTime = calculateLapDifference(state);
       const latestLap = newLap(lapDisplay, lapDivs, lapTime);
+      if (lapDivs.length === 2) {
+        //const priorLapTime = prevLapTime-lap
+        if (prevLapTime > lapTime) {
+          lapDivs[1].classList.add("worst-lap");
+          lapDivs[0].classList.add("best-lap");
+          state.bestLapTime = lapTime;
+          state.worstLapTime = prevLapTime;
+        }
+        if (lapTime > prevLapTime) {
+          lapDivs[1].classList.add("best-lap");
+          lapDivs[0].classList.add("worst-lap");
 
-      if (hasBestLapChanged(lapTime, bestLapTime)) {
-        state.bestLapTime = lapTime;
-        updateLap(latestLap.nextElementSibling, "best-lap");
-      }
+          state.bestLapTime = prevLapTime;
+          state.worstLapTime = lapTime;
+        }
+      } else if (lapDivs.length > 2) {
+        if (hasBestLapChanged(lapTime, bestLapTime)) {
+          state.bestLapTime = lapTime;
+          updateLap(latestLap.nextElementSibling, "best-lap");
+        }
 
-      if (hasWorstLapChanged(lapTime, worstLapTime)) {
-        state.worstLapTime = lapTime;
-        updateLap(latestLap.nextElementSibling, "worst-lap");
+        if (hasWorstLapChanged(lapTime, worstLapTime)) {
+          state.worstLapTime = lapTime;
+          updateLap(latestLap.nextElementSibling, "worst-lap");
+        }
       }
       state.prevLapTime += lapTime;
     } else {
