@@ -73,6 +73,7 @@ stopwatchButton.onclick = () => {
 const startStopwatch = (state) => {
   state.startTime = Date.now();
   state.startLapTime = Date.now();
+  state.prevLapTime = state.prevLapTime || Date.now();
 };
 
 const stopStopwatch = (timerID, state) => {

@@ -17,14 +17,8 @@ const updateLapTime = (startLapTime, stopTime) => {
   return timeLapsedInMilliseconds;
 };
 
-const calculateLapDifference = (startTime, prevLapTime) => {
-  const currentTime = Date.now();
-
-  if (!prevLapTime) {
-    return currentTime - startTime;
-  }
-
-  return currentTime - prevLapTime;
+const calculateLapDifference = (prevLapTime) => {
+  return Date.now() - prevLapTime;
 };
 
 const hasBestLapChanged = (currentTime, bestLapTime) => {
