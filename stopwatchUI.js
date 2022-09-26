@@ -41,7 +41,8 @@ const toggleStopwatchControlUI = (
   lapButton.innerText = lapButtonText;
 };
 
-const updateStopwatchDisplay = (timeLapsed, lapTimeLapsed) => {
+const updateStopwatchDisplay = (state) => {
+  const { timeLapsed, lapTimeLapsed } = state;
   const stopwatchText = document.querySelector(".timer-display>span");
   const lapDivs = document.querySelectorAll(".lap");
   const lapTimeText = lapDivs[0];

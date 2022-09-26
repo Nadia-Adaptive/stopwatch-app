@@ -1,82 +1,44 @@
-let startTime, startLapTime, stopTime, timeLapsed, lapTimeLapsed;
-let bestLapTime, worstLapTime;
-
-const startStopwatch = () => {
-  startTime = Date.now();
-  startLapTime = Date.now();
-};
-const stopStopwatch = (timerID) => {
-  cancelAnimationFrame(timerID);
-  stopTime = timeLapsed;
-};
-
-const updateStopwatchTime = () => {
+const updateTime = (startTime, stopTime) => {
   let timeLapsedInMilliseconds = Date.now() - startTime;
 
   if (stopTime) {
     timeLapsedInMilliseconds += stopTime;
   }
-
-  timeLapsed = timeLapsedInMilliseconds;
-  return timeLapsed;
+  return timeLapsedInMilliseconds;
 };
 
-const updateLapTime = () => {
+const updateLapTime = (startLapTime, stopTime) => {
   let timeLapsedInMilliseconds = Date.now() - startLapTime;
 
   if (stopTime) {
     timeLapsedInMilliseconds += stopTime;
   }
 
-  lapTimeLapsed = timeLapsedInMilliseconds;
-  return lapTimeLapsed;
+  return timeLapsedInMilliseconds;
 };
 
-const resetStopwatchTimes = () => {
-  stopTime = null;
-  startTime = null;
-  bestLapTime = null;
-  worstLapTime = null;
-  timeLapsed = null;
-};
-
-const calculateLapDifference = (prevLapTime) => {
+const calculateLapDifference = (startTime, prevLapTime) => {
   const currentTime = Date.now();
-  startLapTime = currentTime;
+
   if (!prevLapTime) {
     return currentTime - startTime;
   }
-  lapTimeLapsed = 0;
+
   return currentTime - prevLapTime;
 };
 
-const hasBestLapChanged = (currentTime) => {
-  if (bestLapTime >= currentTime) {
-    bestLapTime = currentTime;
-    return bestLapTime;
-  } else if (!bestLapTime) {
-    bestLapTime = currentTime;
-  }
-  return null;
+const hasBestLapChanged = (currentTime, bestLapTime) => {
+  return bestLapTime >= currentTime;
 };
 
-const hasWorstLapChanged = (currentTime) => {
-  if (worstLapTime <= currentTime) {
-    worstLapTime = currentTime;
-    return true;
-  } else if (!worstLapTime) {
-    worstLapTime = currentTime;
-  }
-  return false;
+const hasWorstLapChanged = (currentTime, worstLapTime) => {
+  return worstLapTime <= currentTime;
 };
 
 export {
-  resetStopwatchTimes,
   calculateLapDifference,
   hasBestLapChanged,
   hasWorstLapChanged,
-  startStopwatch,
-  stopStopwatch,
-  updateStopwatchTime,
+  updateTime,
   updateLapTime,
 };
