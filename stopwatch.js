@@ -25,6 +25,14 @@ const stopStopwatch = (state) => {
   state.stopTime = state.timeLapsed;
 };
 
+const resetStopwatchTimes = (state) => {
+  for (const property in state) {
+    state[property] = null;
+  }
+  state.bestLapTime = Number.MAX_SAFE_INTEGER;
+  state.worstLapTime = Number.MIN_SAFE_INTEGER;
+};
+
 export {
   calculateLapDifference,
   hasBestLapChanged,
@@ -32,4 +40,5 @@ export {
   updateTime,
   startStopwatch,
   stopStopwatch,
+  resetStopwatchTimes,
 };
