@@ -12,9 +12,10 @@ import {
   resetStopwatchUI,
   toggleStopwatchControlUI,
   updateStopwatchDisplay,
+  newLap,
+  updateLap,
 } from "./stopwatchUI.js";
 
-import { newLap, updateLap } from "./stopwatchUI.JS";
 import { isStopwatchRunning, toggleIsStopwatchRunning } from "./utils.js";
 
 window.onload = () => {
@@ -23,8 +24,8 @@ window.onload = () => {
     stopTime: null,
     timeLapsed: null,
     prevLapTime: null,
-    bestLapTime: Number.MAX_SAFE_INTEGER,
-    worstLapTime: Number.MIN_SAFE_INTEGER,
+    bestLapTime: null,
+    worstLapTime: null,
     timerID: null,
   };
 
@@ -34,37 +35,12 @@ window.onload = () => {
   lapButton.onclick = () => {
     const lapDisplay = document.querySelector("#lap-display");
     const lapDivs = document.querySelectorAll(".lap");
-    const { bestLapTime, worstLapTime, prevLapTime } = state;
 
     if (isStopwatchRunning) {
       const lapTime = calculateLapDifference(state);
       const latestLap = newLap(lapDisplay, lapDivs, lapTime);
-      if (lapDivs.length === 2) {
-        //const priorLapTime = prevLapTime-lap
-        if (prevLapTime > lapTime) {
-          lapDivs[1].classList.add("worst-lap");
-          lapDivs[0].classList.add("best-lap");
-          state.bestLapTime = lapTime;
-          state.worstLapTime = prevLapTime;
-        }
-        if (lapTime > prevLapTime) {
-          lapDivs[1].classList.add("best-lap");
-          lapDivs[0].classList.add("worst-lap");
 
-          state.bestLapTime = prevLapTime;
-          state.worstLapTime = lapTime;
-        }
-      } else if (lapDivs.length > 2) {
-        if (hasBestLapChanged(lapTime, bestLapTime)) {
-          state.bestLapTime = lapTime;
-          updateLap(latestLap.nextElementSibling, "best-lap");
-        }
-
-        if (hasWorstLapChanged(lapTime, worstLapTime)) {
-          state.worstLapTime = lapTime;
-          updateLap(latestLap.nextElementSibling, "worst-lap");
-        }
-      }
+      findBestAndWorstLaps(state, lapTime, latestLap);
       state.prevLapTime += lapTime;
     } else {
       restartStopwatch(lapDisplay, lapButton, state);
@@ -98,5 +74,33 @@ window.onload = () => {
   const restartStopwatch = (lapDisplay) => {
     resetStopwatchUI(lapDisplay, lapButton, stopwatchButton);
     resetStopwatchTimes(state);
+  };
+
+  const findBestAndWorstLaps = (state, lapTime, latestLap) => {
+    if (lapDivs.length === 2) {
+      if (prevLapTime > lapTime) {
+        lapDivs[1].classList.add("worst-lap");
+        lapDivs[0].classList.add("best-lap");
+        state.bestLapTime = lapTime;
+        state.worstLapTime = prevLapTime;
+      }
+      if (lapTime > prevLapTime) {
+        lapDivs[1].classList.add("best-lap");
+        lapDivs[0].classList.add("worst-lap");
+
+        state.bestLapTime = prevLapTime;
+        state.worstLapTime = lapTime;
+      }
+    } else if (lapDivs.length > 2) {
+      if (hasBestLapChanged(lapTime, state.bestLapTime)) {
+        state.bestLapTime = lapTime;
+        updateLap(latestLap.nextElementSibling, "best-lap");
+      }
+
+      if (hasWorstLapChanged(lapTime, state.worstLapTime)) {
+        state.worstLapTime = lapTime;
+        updateLap(latestLap.nextElementSibling, "worst-lap");
+      }
+    }
   };
 };
