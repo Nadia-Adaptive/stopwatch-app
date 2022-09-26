@@ -22,10 +22,8 @@ let timerID = null;
 document.onLoad = () => {};
 const state = {
   startTime: null,
-  startLapTime: null,
   stopTime: null,
   timeLapsed: null,
-  lapTimeLapsed: null,
   prevLapTime: null,
   bestLapTime: Number.MAX_SAFE_INTEGER,
   worstLapTime: Number.MIN_SAFE_INTEGER,
@@ -34,10 +32,10 @@ const state = {
 lapButton.onclick = () => {
   const lapDisplay = document.querySelector("#lap-display");
   const lapDivs = document.querySelectorAll(".lap");
-  const { startTime, prevLapTime, bestLapTime, worstLapTime } = state;
+  const { bestLapTime, worstLapTime } = state;
 
   if (isStopwatchRunning) {
-    const lapTime = calculateLapDifference(startTime, prevLapTime);
+    const lapTime = calculateLapDifference(state);
     const latestLap = newLap(lapDisplay, lapDivs, lapTime);
 
     if (hasBestLapChanged(lapTime, bestLapTime)) {
@@ -49,12 +47,10 @@ lapButton.onclick = () => {
       state.worstLapTime = lapTime;
       updateLap(latestLap.nextElementSibling, "worst-lap");
     }
-    state.startLapTime = Date.now();
-    state.lapTimeLapsed = 0;
+    state.prevLapTime += lapTime;
   } else {
     restartStopwatch(lapDisplay, lapButton, state);
   }
-  state.prevLapTime = Date.now();
 };
 
 stopwatchButton.onclick = () => {
@@ -73,7 +69,7 @@ stopwatchButton.onclick = () => {
 const startStopwatch = (state) => {
   state.startTime = Date.now();
   state.startLapTime = Date.now();
-  state.prevLapTime = state.prevLapTime || Date.now();
+  state.prevLapTime = state.prevLapTime || 0;
 };
 
 const stopStopwatch = (timerID, state) => {
@@ -82,10 +78,13 @@ const stopStopwatch = (timerID, state) => {
 };
 
 const updateStopwatch = () => {
-  const { startTime, startLapTime, stopTime } = state;
-  state.timeLapsed = updateTime(startTime, stopTime);
-  state.lapTimeLapsed = updateTime(startLapTime, stopTime);
-  updateStopwatchDisplay(state);
+  const { startTime, stopTime } = state;
+  const timeLapsed = updateTime(startTime, stopTime);
+  const lapTime = calculateLapDifference(state);
+
+  updateStopwatchDisplay(timeLapsed, lapTime);
+
+  state.timeLapsed = timeLapsed;
   timerID = requestAnimationFrame(updateStopwatch);
 };
 

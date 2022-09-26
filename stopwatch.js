@@ -1,24 +1,9 @@
 const updateTime = (startTime, stopTime) => {
-  let timeLapsedInMilliseconds = Date.now() - startTime;
-
-  if (stopTime) {
-    timeLapsedInMilliseconds += stopTime;
-  }
-  return timeLapsedInMilliseconds;
+  return Date.now() - startTime + stopTime;
 };
 
-const updateLapTime = (startLapTime, stopTime) => {
-  let timeLapsedInMilliseconds = Date.now() - startLapTime;
-
-  if (stopTime) {
-    timeLapsedInMilliseconds += stopTime;
-  }
-
-  return timeLapsedInMilliseconds;
-};
-
-const calculateLapDifference = (prevLapTime) => {
-  return Date.now() - prevLapTime;
+const calculateLapDifference = (state) => {
+  return state.timeLapsed - state.prevLapTime;
 };
 
 const hasBestLapChanged = (currentTime, bestLapTime) => {
@@ -34,5 +19,4 @@ export {
   hasBestLapChanged,
   hasWorstLapChanged,
   updateTime,
-  updateLapTime,
 };
