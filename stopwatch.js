@@ -14,9 +14,22 @@ const hasWorstLapChanged = (currentTime, worstLapTime) => {
   return worstLapTime <= currentTime;
 };
 
+const startStopwatch = (state) => {
+  state.startTime = Date.now();
+  state.startLapTime = Date.now();
+  state.prevLapTime = state.prevLapTime || 0;
+};
+
+const stopStopwatch = (timerID, state) => {
+  cancelAnimationFrame(timerID);
+  state.stopTime = state.timeLapsed;
+};
+
 export {
   calculateLapDifference,
   hasBestLapChanged,
   hasWorstLapChanged,
   updateTime,
+  startStopwatch,
+  stopStopwatch,
 };
