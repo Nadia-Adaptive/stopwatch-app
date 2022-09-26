@@ -20,8 +20,8 @@ const startStopwatch = (state) => {
   state.prevLapTime = state.prevLapTime || 0;
 };
 
-const stopStopwatch = (timerID, state) => {
-  cancelAnimationFrame(timerID);
+const stopStopwatch = (state) => {
+  cancelAnimationFrame(state.timerID);
   state.stopTime = state.timeLapsed;
 };
 

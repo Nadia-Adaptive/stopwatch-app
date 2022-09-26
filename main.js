@@ -16,11 +16,6 @@ import {
 import { newLap, updateLap } from "./stopwatchUI.JS";
 import { isStopwatchRunning, toggleIsStopwatchRunning } from "./utils.js";
 
-const lapButton = document.querySelector(".default > button");
-const stopwatchButton = document.querySelector("#stopwatch-control > button");
-
-let timerID = null;
-
 window.onload = () => {
   const state = {
     startTime: null,
@@ -29,7 +24,11 @@ window.onload = () => {
     prevLapTime: null,
     bestLapTime: Number.MAX_SAFE_INTEGER,
     worstLapTime: Number.MIN_SAFE_INTEGER,
+    timerID: null,
   };
+
+  const lapButton = document.querySelector(".default > button");
+  const stopwatchButton = document.querySelector("#stopwatch-control > button");
 
   lapButton.onclick = () => {
     const lapDisplay = document.querySelector("#lap-display");
@@ -61,9 +60,9 @@ window.onload = () => {
 
     if (isStopwatchRunning) {
       startStopwatch(state);
-      timerID = requestAnimationFrame(updateStopwatch);
+      state.timerID = requestAnimationFrame(updateStopwatch);
     } else {
-      stopStopwatch(timerID, state);
+      stopStopwatch(state);
     }
     toggleStopwatchControlUI(stopwatchControl, stopwatchButton, lapButton);
   };
@@ -76,7 +75,7 @@ window.onload = () => {
     updateStopwatchDisplay(timeLapsed, lapTime);
 
     state.timeLapsed = timeLapsed;
-    timerID = requestAnimationFrame(updateStopwatch);
+    state.timerID = requestAnimationFrame(updateStopwatch);
   };
 
   const restartStopwatch = (lapDisplay) => {
